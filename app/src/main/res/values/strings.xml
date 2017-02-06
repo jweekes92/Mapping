@@ -3,4 +3,7 @@
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="location">Location</string>
+    <string name="choosemap">Choose map style</string>
+    <string name="regularview">Regular View</string>
+    <string name="cyclemapview">Cycle Map View</string>
 </resources>
