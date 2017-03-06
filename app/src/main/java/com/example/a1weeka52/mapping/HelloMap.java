@@ -14,6 +14,7 @@ import android.widget.TextView;
 import android.view.View.OnClickListener;
 
 import org.osmdroid.config.Configuration;
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory;
 import org.osmdroid.views.MapView;
 import org.osmdroid.util.GeoPoint;
 
@@ -34,10 +35,11 @@ public class HelloMap extends Activity implements OnClickListener
 
         mv.setBuiltInZoomControls(true);
         mv.getController().setZoom(14);
-        mv.getController().setCenter(new GeoPoint(51.05,-0.72));
 
         Button b = (Button)findViewById(R.id.btn1);
         b.setOnClickListener(this);
+
+        mv.getController().setCenter(new GeoPoint(52.95, -1.15));
     }
 
     public boolean onCreateOptionsMenu(Menu menu)
@@ -54,11 +56,35 @@ public class HelloMap extends Activity implements OnClickListener
             //System.exit(0);
 
             Intent intent = new Intent(this, MapChooseActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent,0);
 
             return true;
         }
         return false;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent intent)
+    {
+        if (requestCode==0)
+        {
+            if (resultCode==RESULT_OK)
+            {
+                Bundle extras=intent.getExtras();
+                boolean cyclemap = extras.getBoolean("com.example.cyclemap");
+                if(cyclemap==true)
+                {
+                    mv.setTileSource(TileSourceFactory.CYCLEMAP);
+                }
+                else
+                {
+                    mv.setTileSource(TileSourceFactory.MAPNIK);
+                }
+            }
+        }
+        if (requestCode==1)
+        {
+            if (resultCode==)
+        }
     }
 
     public void onClick(View view)
@@ -70,6 +96,5 @@ public class HelloMap extends Activity implements OnClickListener
 
         double latitude = Double.parseDouble(lat.getText().toString());
         double longitude = Double.parseDouble(lon.getText().toString());
-
     }
 }
