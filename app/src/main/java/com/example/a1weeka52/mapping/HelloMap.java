@@ -2,6 +2,7 @@ package com.example.a1weeka52.mapping;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.Menu;
@@ -53,10 +54,27 @@ public class HelloMap extends Activity implements OnClickListener
     {
         if(item.getItemId() == R.id.choosemap)
         {
-            //System.exit(0);
-
             Intent intent = new Intent(this, MapChooseActivity.class);
             startActivityForResult(intent,0);
+
+            return true;
+        }
+        return false;
+
+        //LAST SAVED PLACE. ELSE IF STATEMENT NOT WORKING
+
+         if(item.getItemId() == R.id.setloc)
+        {
+            Intent intent = new Intent(this, SetLocationActivity.class);
+            startActivityForResult(intent,1);
+
+            return true;
+        }
+        return false;
+         if(item.getItemId() == R.id.preferences)
+        {
+            Intent intent = new Intent(this, MyPrefsActivity.class);
+            startActivityForResult(intent,2);
 
             return true;
         }
@@ -81,10 +99,7 @@ public class HelloMap extends Activity implements OnClickListener
                 }
             }
         }
-        if (requestCode==1)
-        {
-            if (resultCode==)
-        }
+
     }
 
     public void onClick(View view)
@@ -96,5 +111,15 @@ public class HelloMap extends Activity implements OnClickListener
 
         double latitude = Double.parseDouble(lat.getText().toString());
         double longitude = Double.parseDouble(lon.getText().toString());
+    }
+
+    @Override
+    protected void onStart()
+    {
+        super.onStart();
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        double lat = Double.parseDouble (prefs.getString("lat", "50.9"));
+        double lon = Double.parseDouble (prefs.getString("lon", "-1.4"));
+        mv.getController().setCenter(new GeoPoint(lat, lon));
     }
 }

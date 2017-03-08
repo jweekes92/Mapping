@@ -27,6 +27,13 @@
             android:label="@string/choosemap">
         </activity>
 
+        <activity android:name=".SetLocationActivity"
+            android:label="@string/setloc">
+        </activity>
+        <activity android:name=".MyPrefsActivity"
+            android:label="@string/preferences">
+        </activity>
+
     </application>
 
 </manifest>
